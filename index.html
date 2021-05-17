@@ -7,14 +7,17 @@
     <title>Davi Serrano</title>
 </head>
 <style>
-	body{
+	html, body{
 		margin: 0;
 		padding: 0;
 		overflow: hidden;
+
+	
 	}
+
 </style>
 <body>
-    <canvas width="1800" height="660">  </canvas>
+    <canvas width="1800" height="800">  </canvas>
 
 
     <script>
@@ -27,20 +30,59 @@
 		var cnv = document.querySelector("canvas");
 		//dispositivo através do qual desenhamos no canvas
 		var ctx = cnv.getContext("2d");
-		//Objeto com seus atributos de posicionamento nos eixos X e Y
-		var p1 = {
-			x: 10,
-			y: 10
-		};
 		//Nave
-		var img = new Image();
-		img.src = "IMG/Nave.png"
+		var nave = new Image();
+		nave.src = "IMG/Nave.png"
 		//Fundo de tela
 		var FundoImg = new Image();
 		FundoImg.src = "IMG/fundo.jpg"
+		//Objetos
+		var sprites = [];
 		
+		var gameWorld = {
+			img: FundoImg,
+			x:0,
+			y:0,
+			width: 1800,
+			height: 800,
+
+		};
+		sprites.push(gameWorld);
+
+		var p1 = {
+			img: nave,
+			x: 0,
+			y: 0,
+			width: 320,
+			height: 168,
+
+		}
+		// sprites.push(char);
 		
-		
+		//Câmera
+		var cam = {
+			x:0,
+			y:0,
+			width: cnv.width,
+			height: cnv.height,
+
+			leftEdge: function(){
+				return this.x + (this.width * 0.25);
+			},
+			rightEdge: function(){
+				return this.x + (this.width * 0.75);
+			},
+			topEdge: function(){
+				return this.y + (this.height * 0.25);
+			},
+			bottomEdge: function(){
+				return this.y + (this.height * 0.75);
+			}
+		};
+		// //Posição inicail Nave
+		p1.x = 450
+		p1.y = 200
+
 		//Inicia o loop de animação
 		update();
 
@@ -124,21 +166,43 @@
 			//Easter Egg do Buraco de minhoca
 			if(p1.y === cnv.height || p1.x === cnv.width){
 				alert("Perigo!! Você entrou em um buraco de minhoca, sua nave pode apresentar mal funcionamento, atualize a página para concertar!!")
-				p1.x = 0;
-				p1.y = 0;
+				document.location.reload(true);
 			}
+			//Atualizar a posição da câmera em função do char
+			if(p1.x < cam.leftEdge()){
+				cam.x = p1.x - (cam.width * 0.25);
+			}
+			if(p1.x + p1.width > cam.rightEdge()){
+				cam.x = p1.x + p1.width - (cam.width * 0.75);
+			}
+			if(p1.y < cam.topEdge()){
+				cam.y = p1.y - (cam.height * 0.25);
+			}
+			if(p1.y + p1.height > cam.bottomEdge()){
+				cam.y = p1.y + p1.height - (cam.height * 0.75);
+			}
+			// Limite da camera
+			if(cam.y + cam.height > gameWorld.height){
+				cam.y = gameWorld.height - cam.height;
+			}
+		
+		
 		}
-
 
 		//Função que desenha o objeto na tela de acordo com os parâmetros de posicionamento do objeto
 		function render(){
-			//Limpa a tela
-			ctx.clearRect(0,0,cnv.width,cnv.height);
-			//Desenha o objeto em função de p1.x e p1.y
-			ctx.drawImage(FundoImg, 0, 0);
-			//Desenha o fundo na tela
-			ctx.drawImage(img, p1.x, p1.y);
+			ctx.save();
+			ctx.translate(-cam.x, -cam.y);
+			for (var i in sprites){
+				var spr = sprites[i];
+				//Desenha o objeto em função de p1.x e p1.y
+				ctx.drawImage(spr.img, 0, 0, spr.width, spr.height, spr.x, spr.y, spr.width, spr.height);
+				//Desenha o fundo na tela
+				ctx.drawImage(nave, p1.x, p1.y);
+			}
+			ctx.restore();
 		}
+		
 		//Loop de animação
 		function update(){
 			//Solicita ao navegador uma animação passando a função e o elemento a ser animado
