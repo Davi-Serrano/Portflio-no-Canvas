@@ -17,7 +17,7 @@
 
 </style>
 <body>
-    <canvas width="1800" height="800">  </canvas>
+    <canvas width="3500" height="800">  </canvas>
 
 
     <script>
@@ -43,7 +43,7 @@
 			img: FundoImg,
 			x:0,
 			y:0,
-			width: 1800,
+			width: 3500,
 			height: 800,
 
 		};
@@ -57,7 +57,7 @@
 			height: 168,
 
 		}
-		// sprites.push(char);
+		// sprites.push(char)
 		
 		//Câmera
 		var cam = {
@@ -67,20 +67,20 @@
 			height: cnv.height,
 
 			leftEdge: function(){
-				return this.x + (this.width * 0.25);
+				return this.x + (this.width * 0.5);
 			},
 			rightEdge: function(){
-				return this.x + (this.width * 0.75);
+				return this.x + (this.width * 0.5);
 			},
 			topEdge: function(){
-				return this.y + (this.height * 0.25);
+				return this.y + (this.height * 0.5);
 			},
 			bottomEdge: function(){
-				return this.y + (this.height * 0.75);
+				return this.y + (this.height * 0.5);
 			}
 		};
 		// //Posição inicail Nave
-		p1.x = 450
+		p1.x = 900
 		p1.y = 200
 
 		//Inicia o loop de animação
