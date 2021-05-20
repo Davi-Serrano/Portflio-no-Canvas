@@ -23,7 +23,7 @@
     <script>
         //Variáveis
 		//Código das setas do teclado
-		var UP = 87, DOWN = 83, LEFT = 65, RIGHT = 68;
+		var UP = 38, DOWN = 40, LEFT = 37, RIGHT = 39;
 		//Variáveis de movimentação
 		var moveEsquerda = false, moveDireita = false, moveCima = false, moveBaixo = false;
 		//Referência ao canvas
@@ -182,6 +182,12 @@
 				cam.y = p1.y + p1.height - (cam.height * 0.75);
 			}
 			// Limite da camera
+			if(cam.x < 0){
+				cam.x = 0;
+			}
+			if(cam.y < 0){
+				cam.y = 0;
+			}
 			if(cam.y + cam.height > gameWorld.height){
 				cam.y = gameWorld.height - cam.height;
 			}
