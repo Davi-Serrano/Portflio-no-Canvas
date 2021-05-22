@@ -58,6 +58,21 @@
 
 		}
 		
+		var angle = 0;
+        function convertToRadians(degree) {
+            return degree*(Math.PI/180);
+        }
+
+        function incrementAngle() {
+            angle++;
+            if(angle > 360) {
+                angle = 0;
+            }
+        }
+
+        var BuracoNegro = new Image();
+        BuracoNegro.src = "IMG/buraco negro.png"
+
 		
 		//Câmera
 		var cam = {
@@ -204,6 +219,8 @@
 
 		//Função que desenha o objeto na tela de acordo com os parâmetros de posicionamento do objeto
 		function render(){
+			// ctx.clearRect(0,0,1280,720);
+			
 			ctx.save();
 			ctx.translate(-cam.x, -cam.y);
 			for (var i in sprites){
@@ -212,7 +229,18 @@
 				ctx.drawImage(spr.img, 0, 0, spr.width, spr.height, spr.x, spr.y, spr.width, spr.height);
 				//Desenha a nave
 				ctx.drawImage(nave, p1.x, p1.y);
-			}
+				
+				ctx.lineWidth = 1;  
+				ctx.translate(2100,200);
+				ctx.rotate(convertToRadians(angle));
+				
+				
+				ctx.drawImage(BuracoNegro, -140, -140,);
+				
+				
+				incrementAngle();
+						   
+		 	}
 			ctx.restore();
 		}
 		
