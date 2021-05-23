@@ -94,6 +94,15 @@
 				return this.y + (this.height * 0.5);
 			}
 		};
+
+		//Meteoro
+		var mtoro = new Image();
+		mtoro.src = "IMG/meteoro.png"
+		var meteoro = {
+			x:500,
+			y:400,
+
+		};
 		
 		// //Posição inicail Nave
 		p1.x = 900
@@ -152,6 +161,7 @@
 			}
 		
 		}
+            
 
 		//Função que atualiza o movimento e define os limites
 		function move(){
@@ -162,6 +172,7 @@
 			//Move para a direita
 			if(moveDireita){
 				p1.x+= 2;
+				
 				
 			}
 			//Move para cima
@@ -219,7 +230,7 @@
 
 		//Função que desenha o objeto na tela de acordo com os parâmetros de posicionamento do objeto
 		function render(){
-			// ctx.clearRect(0,0,1280,720);
+			
 			
 			ctx.save();
 			ctx.translate(-cam.x, -cam.y);
@@ -229,6 +240,9 @@
 				ctx.drawImage(spr.img, 0, 0, spr.width, spr.height, spr.x, spr.y, spr.width, spr.height);
 				//Desenha a nave
 				ctx.drawImage(nave, p1.x, p1.y);
+				//Desenha o meteoro					
+				ctx.drawImage(mtoro, meteoro.x, meteoro.y)
+				
 				
 				ctx.lineWidth = 1;  
 				ctx.translate(2100,200);
@@ -243,6 +257,7 @@
 		 	}
 			ctx.restore();
 		}
+		
 		
 		//Loop de animação
 		function update(){
