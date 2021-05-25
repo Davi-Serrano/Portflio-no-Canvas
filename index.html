@@ -99,7 +99,7 @@
 		var mtoro = new Image();
 		mtoro.src = "IMG/meteoro.png"
 		var meteoro = {
-			x:500,
+			x:3900,
 			y:400,
 
 		};
@@ -229,6 +229,12 @@
 		}
 
 		//Função que desenha o objeto na tela de acordo com os parâmetros de posicionamento do objeto
+		function menos(){
+			meteoro.x -=1
+			if(meteoro.x < 0){
+				meteoro.x = 1900
+			}
+		}
 		function render(){
 			
 			
@@ -251,6 +257,7 @@
 				
 				ctx.drawImage(BuracoNegro, -140, -140,);
 				
+				menos();
 				
 				incrementAngle();
 						   
